@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delivery_package_barcode_wiz_form" model="ir.ui.view">
+        <field name="name">delivery.package.barcode.wiz.form</field>
+        <field name="model">delivery.package.barcode.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <h2 style="margin-bottom:25px;">Delivery Package Barcode</h2>
+                <field name="_barcode_scanned" widget="barcode_handler" invisible="1"/>
+                <field name="message_type" invisible="1" />
+                <div class="text-center">
+                        <div class="alert alert-success" role="status" attrs="{'invisible': [('message_type', '!=', 'success')]}">
+                            <field name="message"/>
+                            <field name="picking_id" nolabel="1" attrs="{'readonly': 1}"/>
+                        </div>
+                        <div class="alert alert-info" role="status" attrs="{'invisible': [('message_type', '!=', 'info')]}">
+                            <field name="message"/>
+                        </div>
+                        <div class="alert alert-error" role="status" attrs="{'invisible': [('message_type', '!=', 'error')]}">
+                            <field name="message"/>
+                        </div>
+                </div>
+                <group attrs="{'invisible': [('picking_id', '=', False)]}">
+
+                <field name="picking_line_ids" attrs="{'readonly': 1}">
+                    <tree string="Picking Lines">
+                        <field name="state"/>
+                        <field name="product_id" />
+                        <field name="product_uom_qty" />
+                    </tree>
+                </field>
+                <field name="package_count"/>
+                <field name="package_weight"/>
+
+                <footer>
+                    <button name="button_save" string="Update" type="object" class="oe_highlight"/>
+                </footer>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_delivery_package_barcode" model="ir.actions.act_window">
+        <field name="res_model">delivery.package.barcode.wiz</field>
+        <field name="name">Barcodes Read</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="view_id" ref="view_delivery_package_barcode_wiz_form"/>
+        <field name="target">current</field>
+    </record>
+
+            <menuitem id="delivery_region_menu" action="action_delivery_package_barcode"
+                  parent="stock.menu_stock_root" sequence="1"/>
+</odoo>
