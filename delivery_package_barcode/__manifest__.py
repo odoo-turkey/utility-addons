@@ -10,7 +10,9 @@
     'version': '12.0.1.1.0',
     'depends': ["barcodes", "stock", "delivery_integration_base"],
     'data': [
+        'security/ir.model.access.csv',
         'wizard/delivery_package_barcode_wiz_views.xml',
+        'views/assets.xml',
     ],
     'installable': True,
 }

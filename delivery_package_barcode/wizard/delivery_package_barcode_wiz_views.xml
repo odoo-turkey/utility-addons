@@ -4,14 +4,14 @@
         <field name="name">delivery.package.barcode.wiz.form</field>
         <field name="model">delivery.package.barcode.wiz</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="false" edit="false">
                 <h2 style="margin-bottom:25px;">Delivery Package Barcode</h2>
                 <field name="_barcode_scanned" widget="barcode_handler" invisible="1"/>
                 <field name="message_type" invisible="1" />
                 <div class="text-center">
                         <div class="alert alert-success" role="status" attrs="{'invisible': [('message_type', '!=', 'success')]}">
                             <field name="message"/>
-                            <field name="picking_id" nolabel="1" attrs="{'readonly': 1}"/>
+                            <field name="picking_id" nolabel="1" options="{'no_create': True}"/>
                         </div>
                         <div class="alert alert-info" role="status" attrs="{'invisible': [('message_type', '!=', 'info')]}">
                             <field name="message"/>
@@ -33,7 +33,7 @@
                 <field name="package_weight"/>
 
                 <footer>
-                    <button name="button_save" string="Update" type="object" class="oe_highlight"/>
+                    <button name="button_save" string="Update" type="object" context="{'picking_id': context.get('picking_id', False)}" class="oe_highlight"/>
                 </footer>
                 </group>
             </form>

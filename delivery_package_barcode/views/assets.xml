@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="assets_backend_delivery_barocde" name="Delivery Package Barcode Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="application/javascript"
+                    src="/delivery_package_barcode/static/src/js/delivery_package_barcode.js"/>
+        </xpath>
+    </template>
+
+</odoo>
