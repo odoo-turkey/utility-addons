@@ -68,6 +68,7 @@ class DeliveryPackageBarcodeWiz(models.TransientModel):
                 ('shipping_number', '=', barcode),
                 ('carrier_tracking_ref', '=', barcode)]
 
+
     def on_barcode_scanned(self, barcode):
         self.barcode = barcode
         self.process_barcode(self.barcode)
