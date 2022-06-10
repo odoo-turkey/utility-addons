@@ -64,7 +64,7 @@ class DeliveryPackageBarcodeWiz(models.TransientModel):
         return
 
     def _barcode_domain(self, barcode):
-        return [('name', '=', barcode)]
+        return ['|', ('name', '=', barcode), ('tracking_number', '=', barcode)]
 
     def on_barcode_scanned(self, barcode):
         self.barcode = barcode
