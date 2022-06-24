@@ -35,7 +35,7 @@ msgstr "Barkod tarandı"
 #: model:ir.actions.act_window,name:delivery_package_barcode.action_delivery_package_barcode
 #: model:ir.ui.menu,name:delivery_package_barcode.delivery_region_menu
 msgid "Barcodes Read"
-msgstr "Okunan Barkodlar"
+msgstr "Barkod Desi Girişi"
 
 #. module: delivery_package_barcode
 #: model:ir.model.fields,field_description:delivery_package_barcode.field_delivery_package_barcode_wiz__create_uid
