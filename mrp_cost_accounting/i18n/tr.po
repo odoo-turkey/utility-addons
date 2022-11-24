@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* mrp_cost_accounting
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-24 20:36+0000\n"
+"PO-Revision-Date: 2022-11-24 20:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_cost_accounting
+#: model:ir.model.fields,field_description:mrp_cost_accounting.field_product_price_history__cost_currency_id
+#: model:ir.model.fields,field_description:mrp_cost_accounting.field_stock_quant__cost_currency_id
+msgid "Cost Currency"
+msgstr "Maliyet Para Birimi"
+
+#. module: mrp_cost_accounting
+#: model:ir.model,name:mrp_cost_accounting.model_product_product
+msgid "Product"
+msgstr "Ürün"
+
+#. module: mrp_cost_accounting
+#: model:ir.model,name:mrp_cost_accounting.model_product_price_history
+msgid "Product Price List History"
+msgstr "Ürün Fiyat Listesi Geçmişi"
+
+#. module: mrp_cost_accounting
+#: model:ir.model,name:mrp_cost_accounting.model_stock_quant
+msgid "Quants"
+msgstr "Stoklar"
+
+#. module: mrp_cost_accounting
+#: model:ir.model.fields,help:mrp_cost_accounting.field_stock_warehouse__waiting_cost_factor
+msgid "This field is used to calculate MRP cost accounting. It is used to calculate the cost of waiting products in the warehouse."
+msgstr "Bu alan ürün maliyeti hesaplamak için kullanılır. Depoda bekleyen ürünlere bekleme maliyeti ekler."
+
+#. module: mrp_cost_accounting
+#: model:ir.model.fields,field_description:mrp_cost_accounting.field_stock_quant__total_cost
+msgid "Total Cost"
+msgstr "Toplam Maliyet"
+
+#. module: mrp_cost_accounting
+#: model:ir.model.fields,field_description:mrp_cost_accounting.field_stock_quant__unit_cost
+msgid "Unit Cost"
+msgstr "Birim Maliyeti"
+
+#. module: mrp_cost_accounting
+#: model:ir.model.fields,field_description:mrp_cost_accounting.field_stock_warehouse__waiting_cost_factor
+msgid "Waiting Cost Factor"
+msgstr "Bekleme Maliyeti Faktörü"
+
+#. module: mrp_cost_accounting
+#: model:ir.model,name:mrp_cost_accounting.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Depo"
+
