@@ -1,6 +1,7 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 from odoo import models, api, fields
+from odoo.tools import float_compare
 
 
 class ProductProduct(models.Model):
@@ -15,7 +16,10 @@ class ProductProduct(models.Model):
         :param value:
         :return:
         """
-        self = self.filtered(lambda x: x.standard_price != value)
+        prec = self.env['decimal.precision'].precision_get('Product Price')
+        self = self.filtered(lambda x: float_compare(x.standard_price,
+                                                     value,
+                                                     precision_digits=prec))
         return super(ProductProduct, self)._set_standard_price(value)
 
     # Todo: get price from purchase order
