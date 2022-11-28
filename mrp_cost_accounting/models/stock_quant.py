@@ -58,10 +58,11 @@ class StockQuant(models.Model):
         else:
             quantity_difference = new_quantity - self.quantity
             total_cost = self.total_cost + (quantity_difference * unit_price)
-            if not float_is_zero(total_cost, precision_rounding=prec):
+            if not float_is_zero(new_quantity, precision_rounding=prec):
                 new_unit_cost = total_cost / new_quantity
             else:
                 new_unit_cost = 0.0
+                total_cost = 0.0
 
         vals.update({
             'unit_cost': round(abs(new_unit_cost), prec),
