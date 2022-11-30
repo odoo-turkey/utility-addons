@@ -17,6 +17,7 @@
     ],
     'data': [
         'view/stock_warehouse_view.xml',
+        'view/product_view.xml',
     ],
     'post_init_hook': 'compute_total_quant_cost',
 }
