@@ -1,0 +1,2 @@
+"id","group_id:id","name","model_id","perm_create","perm_unlink","perm_write","perm_read"
+"pricelist_export","group_pricelist_export","Export Pricelist","product.pricelist.export.wiz",1,1,1,1
