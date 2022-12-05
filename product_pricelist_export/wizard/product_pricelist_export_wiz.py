@@ -33,8 +33,7 @@ class ProductPricelistExportWiz(models.TransientModel):
         workbook = xlsxwriter.Workbook(fl)
         worksheet = workbook.add_worksheet(_(pricelist_name))
         self._write_header(workbook, worksheet)
-        header_scale_dict = self._write_header_scales(workbook, worksheet,
-                                                      categ_dict)
+        self._write_header_scales(workbook, worksheet, categ_dict)
         product_count = 0
         for categ, scales in categ_dict.items():
             categ_name = categ.name
@@ -58,6 +57,7 @@ class ProductPricelistExportWiz(models.TransientModel):
                 worksheet.write(product_count, 3, currency_name)  # currency
                 worksheet.write(product_count, 4, categ_name)  # category
 
+                col = 5
                 for scale in scales:
                     int_scale = int(scale)
                     price_dict = self.pricelist_id._compute_price_rule(
@@ -65,10 +65,10 @@ class ProductPricelistExportWiz(models.TransientModel):
                     final_price = price_dict[product.id][0]
                     discount = 100 - round(final_price / base_price * 100, 4)
 
-                    col = header_scale_dict[int_scale]
                     worksheet.write(product_count, col, int_scale)
                     worksheet.write(product_count, col + 1, discount)
                     worksheet.write(product_count, col + 2, round(final_price, 4))
+                    col += 3
 
         workbook.close()
         fl.seek(0)
@@ -125,7 +125,7 @@ class ProductPricelistExportWiz(models.TransientModel):
             worksheet.write(0, col + 2, _('Unit Price'), bold)
             scale_dict[scale] = col
             col += 3
-        return scale_dict
+        return True
 
     def _get_categ_dict(self):
         """
