@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<odoo>
+	<data>
+		<record id="group_pricelist_export" model="res.groups">
+			<field name="name">Export Pricelist</field>
+		</record>
+	</data>	
+</odoo>

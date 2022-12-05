@@ -1,7 +1,7 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import api, models, fields
-from odoo.tools import float_is_zero
+from odoo.tools import float_is_zero, float_compare
 from dateutil import relativedelta
 
 
@@ -20,24 +20,29 @@ class StockQuant(models.Model):
     total_cost = fields.Float(string='Total Cost', default=0.0,
                               readonly=True)
 
-    def _quant_product_unit_price(self):
+    def _quant_product_unit_price(self, prec):
         """
         This method is used to get the unit price of the product and
-        saves the price on product.
+        saves the price on product if price is changed.
         :return: float
         """
-        unit_price = self.product_id._get_price_from_bom()
-        self.product_id.standard_price = unit_price  # Save the unit price
+        product = self.product_id
+        unit_price = product._get_price_from_bom()
+
+        if float_compare(product.standard_price, unit_price,
+                         precision_digits=prec):
+            product.standard_price = unit_price  # Save the unit price
+
         return unit_price
 
-    def _get_product_unit_price(self):
+    def _get_product_unit_price(self, prec):
         """
         This method is used to get the unit price of the product.
         It also calculates waiting cost.
         :return: float
         """
         date_now = fields.Datetime.now()
-        unit_price = self._quant_product_unit_price()
+        unit_price = self._quant_product_unit_price(prec=prec)
         delta = relativedelta.relativedelta(date_now, self.create_date)
         waiting_cost_factor = self.location_id.get_warehouse().waiting_cost_factor
         for x in range(delta.months):
@@ -49,7 +54,7 @@ class StockQuant(models.Model):
         vals = {}
         prec = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
-        unit_price = self._get_product_unit_price()
+        unit_price = self._get_product_unit_price(prec=prec)
 
         if new_quantity is None:  # is a new quant
             new_unit_cost = unit_price
