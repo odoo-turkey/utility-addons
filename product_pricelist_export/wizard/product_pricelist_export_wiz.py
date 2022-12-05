@@ -1,64 +1,91 @@
 # Copyright 2022 Yiğit Budak (https://github.com/yibudak)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models, fields, api, _
+from odoo import models, fields, _
+from odoo.tools import float_is_zero
 from odoo.exceptions import ValidationError
 from io import BytesIO
 from base64 import b64encode
+from tqdm import tqdm
 import xlsxwriter
+import itertools
 
 
 class ProductPricelistExportWiz(models.TransientModel):
     _name = 'product.pricelist.export.wiz'
     _description = 'Product Pricelist Export Wizard'
 
-    product_categ_id = fields.Many2one('product.category',
-                                       string='Product Category')
-    # Todo: many2many yap
+    product_categ_ids = fields.Many2many(comodel_name='product.category',
+                                         string='Product Categories')
+    pricelist_lang = fields.Many2one('res.lang',
+                                     string='Pricelist Language',
+                                     domain=[('active', '=', True)],
+                                     required=True)
     pricelist_id = fields.Many2one('product.pricelist',
                                    string='Pricelist', required=True)
 
     def action_export(self):
         self.ensure_one()
-        categ_name = self.product_categ_id.name
+        self = self.with_context(lang=self.pricelist_lang.code)
+        categ_dict = self._get_categ_dict()
         pricelist_name = self.pricelist_id.name
         currency_name = self.pricelist_id.currency_id.name
-        products = self._get_products()
-        rules = self._get_price_rules()
         fl = BytesIO()
         workbook = xlsxwriter.Workbook(fl)
         worksheet = workbook.add_worksheet(_(pricelist_name))
         self._write_header(workbook, worksheet)
-        rules_header = self._write_rules_header(workbook, worksheet, rules)
+        header_scale_dict = self._write_header_scales(workbook, worksheet,
+                                                      categ_dict)
+        product_count = 0
+        for categ, scales in categ_dict.items():
+            categ_name = categ.name
 
-        for idx, product in enumerate(products):
-            worksheet.write(idx + 1, 0, idx + 1)
-            worksheet.write(idx + 1, 1, product.default_code)
-            worksheet.write(idx + 1, 2, product.attr_price)
-            worksheet.write(idx + 1, 3, currency_name)
-            worksheet.write(idx + 1, 4, categ_name)
-            for rule in rules_header:
-                product_price = product.attr_price * (1 - rule['discount']/100)
-                product_price = round(product_price, 2)
-                worksheet.write(idx + 1, rule['first_column'], rule['min_qty'])
-                worksheet.write(idx + 1, rule['first_column'] + 1, rule['discount'])
-                worksheet.write(idx + 1, rule['first_column'] + 2, product_price) # Todo fix price calc
+            products = self._get_products(categ.id)
+            if not products:
+                continue
 
-        # get base url
+            for product in tqdm(products):
+                base_price_dict = self.pricelist_id._compute_price_rule(
+                    [(product, 1, False)])
+                if not base_price_dict:
+                    continue
+                base_price = base_price_dict[product.id][0]
+                if float_is_zero(base_price, 4):
+                    continue
+                product_count += 1
+                worksheet.write(product_count, 0, product_count)  # sequence
+                worksheet.write(product_count, 1, product.display_name)  # code
+                worksheet.write(product_count, 2, round(base_price, 4))  # price
+                worksheet.write(product_count, 3, currency_name)  # currency
+                worksheet.write(product_count, 4, categ_name)  # category
+
+                for scale in scales:
+                    int_scale = int(scale)
+                    price_dict = self.pricelist_id._compute_price_rule(
+                        [(product, int_scale, False)])
+                    final_price = price_dict[product.id][0]
+                    discount = 100 - round(final_price / base_price * 100, 4)
+
+                    col = header_scale_dict[int_scale]
+                    worksheet.write(product_count, col, int_scale)
+                    worksheet.write(product_count, col + 1, discount)
+                    worksheet.write(product_count, col + 2, round(final_price, 4))
+
         workbook.close()
         fl.seek(0)
         fl_b64 = b64encode(fl.read())
-        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
-        attachment_obj = self.env['ir.attachment']
-        # create attachment
-        attachment_id = attachment_obj.create(
-            {'name': "name", 'datas_fname': 'deneme.xlsx', 'datas': fl_b64})
-        # prepare download url
-        download_url = '/web/content/' + str(
-            attachment_id.id) + '?download=true'
         # download
+        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        attachment_id = self.env['ir.attachment'].create(
+            {
+                'name': f'{pricelist_name}.xlsx',
+                'datas_fname': f'{pricelist_name} - {str(fields.date.today())}.xlsx',
+                'datas': fl_b64
+            }
+        )
+        download_url = "/web/content/%s?download=true" % attachment_id.id
         return {
             "type": "ir.actions.act_url",
-            "url": str(base_url) + str(download_url),
+            "url": base_url + download_url,
             "target": "new",
         }
 
@@ -69,67 +96,70 @@ class ProductPricelistExportWiz(models.TransientModel):
         Product Code, Product Name, Price, Price Currency, Product Category
         """
         bold = workbook.add_format({'bold': True})
-        worksheet.set_column('A:A', 10)
-        worksheet.write('A1', _('Sequence'), bold)
-        worksheet.set_column('B:B', 25)
-        worksheet.write('B1', _('Product Code'), bold)
-        worksheet.set_column('C:C', 15)
+        worksheet.set_column('A:A', 7)
+        worksheet.write('A1', _('No#'), bold)
+        worksheet.set_column('B:B', 75)
+        worksheet.write('B1', _('Name'), bold)
+        worksheet.set_column('C:C', 10)
         worksheet.write('C1', _('Standard Price'), bold)
-        worksheet.set_column('D:D', 10)
+        worksheet.set_column('D:D', 5)
         worksheet.write('D1', _('Currency'), bold)
-        worksheet.set_column('E:E', 25)
+        worksheet.set_column('E:E', 20)
         worksheet.write('E1', _('Category Name'), bold)
         return True
 
-    def _write_rules_header(self, workbook, worksheet, rules):
+    def _write_header_scales(self, workbook, worksheet, categ_dict):
         """
-        Writes price rules to the worksheet
+        Writes categ_dict to the worksheet
         """
         bold = workbook.add_format({'bold': True})
-        column_list = []
+        scale_dict = {}
+        scales = [int(x) for x in set(itertools.chain(*categ_dict.values()))]
         col = 5  # start from column F
-        for rule in rules:
-            worksheet.set_column(col, col, 15)
+        for scale in sorted(scales):
+            worksheet.set_column(col, col, 7)
             worksheet.write(0, col, _('Quantity'), bold)
-            worksheet.set_column(col + 1, col + 1, 15)
+            worksheet.set_column(col + 1, col + 1, 10)
             worksheet.write(0, col + 1, _('Discount %'), bold)
-            worksheet.set_column(col + 2, col + 2, 15)
+            worksheet.set_column(col + 2, col + 2, 10)
             worksheet.write(0, col + 2, _('Unit Price'), bold)
-            column_list.append({
-                'first_column': col,
-                'min_qty': rule.min_quantity,
-                'discount': rule.price_discount,
-            })
+            scale_dict[scale] = col
             col += 3
-        return column_list
+        return scale_dict
 
-    def _get_price_rules(self):
+    def _get_categ_dict(self):
         """
-        Returns price rules according to the selected pricelist. It also sorts
-        the rules according to the quantity.
+        Returns categories dictionary
         """
-        rules = self.env['product.pricelist.item'].search([
-            ('pricelist_id', '=', self.pricelist_id.id),
-            ('categ_id', '=', self.product_categ_id.id),
-            ('applied_on', '=', '2_product_category'),
-            ('price_discount', '!=', 0.0),
-        ])
+        domain = [
+            ('show_in_pricelist', '=', True),
+            ('pricelist_discount_scales', '!=', False)
+        ]
+        if self.product_categ_ids:
+            domain += [('id', 'in', self.product_categ_ids.ids)]
 
-        if not rules:
-            raise ValidationError(_('There is no price rule in this category'))
+        categs = self.env['product.category'].search(domain)
+        if not categs:
+            raise ValidationError(_('No category found.'))
 
-        return rules.sorted(key=lambda r: r.min_quantity)
+        categ_dict = {}
+        for categ in categs:
+            categ_dict[categ] = categ.pricelist_discount_scales.split(',')
 
-    def _get_products(self):
+        # sort categs by scale count
+        return dict(sorted(categ_dict.items(), key=lambda x: len(x[1]),
+                           reverse=True))
+
+    def _get_products(self, categ_id):
         """
         Returns products according to the selected category. If no category
-        selected, returns all products. # Todo
+        selected, returns all products.
         """
-        products = self.env['product.product'].search([
-            ('categ_id', '=', self.product_categ_id.id),
+        domain = [
             ('sale_ok', '=', True),
-            ('attr_price', '=', 0.0) # Todo: maybe delete this
-        ])
-        if not products:
-            raise ValidationError(_('There is no product in this category'))
+            ('v_fiyat_dolar', '!=', 0.0),  # Todo: maybe delete this
+            ('categ_id', '=', categ_id)
+        ]
+
+        products = self.env['product.product'].search(domain)
         return products

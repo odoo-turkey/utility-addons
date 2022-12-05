@@ -21,5 +21,6 @@
         "security/res_groups.xml",
         "security/ir.model.access.csv",
         "wizard/product_pricelist_export_wiz_view.xml",
+        "views/product_category_views.xml",
     ],
 }

@@ -8,7 +8,9 @@
                 <form string="Export Pricelist">
                     <sheet>
                         <group>
-                            <field name="product_categ_id"/>
+                            <p class="text-muted">Lists all products if no category is selected</p>
+                            <field name="product_categ_ids" widget="many2many_tags" />
+                            <field name="pricelist_lang" />
                             <field name="pricelist_id"/>
                         </group>
                         <footer>
