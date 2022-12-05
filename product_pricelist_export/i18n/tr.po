@@ -1,0 +1,173 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_pricelist_export
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-05 08:31+0000\n"
+"PO-Revision-Date: 2022-12-05 08:31+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_pricelist_export
+#: model_terms:ir.ui.view,arch_db:product_pricelist_export.view_product_pricelist_export_wiz_form
+msgid "Cancel"
+msgstr "İptal"
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:104
+#, python-format
+msgid "Category Name"
+msgstr "Kategori Adı"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__create_uid
+msgid "Created by"
+msgstr "Oluşturan"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__create_date
+msgid "Created on"
+msgstr "Oluşturulma"
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:102
+#, python-format
+msgid "Currency"
+msgstr "Para Birimi"
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:119
+#, python-format
+msgid "Discount %"
+msgstr "İndirim %"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__display_name
+msgid "Display Name"
+msgstr "Görünüm Adı"
+
+#. module: product_pricelist_export
+#: model_terms:ir.ui.view,arch_db:product_pricelist_export.view_product_pricelist_export_wiz_form
+msgid "Export"
+msgstr "Dışa Aktar"
+
+#. module: product_pricelist_export
+#: model_terms:ir.ui.view,arch_db:product_pricelist_export.view_product_pricelist_export_wiz_form
+#: model:res.groups,name:product_pricelist_export.group_pricelist_export
+msgid "Export Pricelist"
+msgstr "Fiyat Listesi Çıkart"
+
+#. module: product_pricelist_export
+#: model:ir.actions.act_window,name:product_pricelist_export.product_pricelist_export_wiz_action
+#: model:ir.ui.menu,name:product_pricelist_export.menu_product_pricelist_export_wiz
+msgid "Export Product Pricelist"
+msgstr "Fiyat Listesi Çıkart"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz____last_update
+msgid "Last Modified on"
+msgstr "Son Güncelleme"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__write_uid
+msgid "Last Updated by"
+msgstr "Son Güncelleyen"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__write_date
+msgid "Last Updated on"
+msgstr "Son Güncelleme"
+
+#. module: product_pricelist_export
+#: model_terms:ir.ui.view,arch_db:product_pricelist_export.view_product_pricelist_export_wiz_form
+msgid "Lists all products if no category is selected"
+msgstr "Kategori seçilmezse bütün ürünleri listeler"
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:98
+#, python-format
+msgid "Name"
+msgstr "İsim"
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:139
+#, python-format
+msgid "No category found."
+msgstr "Kategori bulunamadı."
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:96
+#, python-format
+msgid "No#"
+msgstr "No#"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__pricelist_id
+msgid "Pricelist"
+msgstr "Fiyat Listesi"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_category__pricelist_discount_scales
+msgid "Pricelist Discount Scales"
+msgstr "Fiyat Listesi İndirim Skalası"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,help:product_pricelist_export.field_product_category__pricelist_discount_scales
+msgid "Pricelist Discount Scales for this category. Example: 50,100,150,200,250"
+msgstr "Bu kategori için fiyat listesi indirim skalası. Örn: 50,100,150,200,250"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__pricelist_lang
+msgid "Pricelist Language"
+msgstr "Fiyat Listesi Dili"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_pricelist_export_wiz__product_categ_ids
+msgid "Product Categories"
+msgstr "Ürün Kategorileri"
+
+#. module: product_pricelist_export
+#: model:ir.model,name:product_pricelist_export.model_product_category
+msgid "Product Category"
+msgstr "Ürün Kategorisi"
+
+#. module: product_pricelist_export
+#: model:ir.model,name:product_pricelist_export.model_product_pricelist_export_wiz
+msgid "Product Pricelist Export Wizard"
+msgstr "Fiyat Listesi Çıkartma Sihirbazı"
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:117
+#, python-format
+msgid "Quantity"
+msgstr "Adet"
+
+#. module: product_pricelist_export
+#: model:ir.model.fields,field_description:product_pricelist_export.field_product_category__show_in_pricelist
+msgid "Show in Pricelist"
+msgstr "Fiyat listesinde göster"
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:100
+#, python-format
+msgid "Standard Price"
+msgstr "Standart Fiyat"
+
+#. module: product_pricelist_export
+#: code:addons/product_pricelist_export/wizard/product_pricelist_export_wiz.py:121
+#, python-format
+msgid "Unit Price"
+msgstr "Birim Fiyatı"
+

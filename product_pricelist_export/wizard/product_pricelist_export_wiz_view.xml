@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_product_pricelist_export_wiz_form" model="ir.ui.view">
+            <field name="name">product.pricelist.export.wiz.form</field>
+            <field name="model">product.pricelist.export.wiz</field>
+            <field name="arch" type="xml">
+                <form string="Export Pricelist">
+                    <sheet>
+                        <group>
+                            <p class="text-muted">Lists all products if no category is selected</p>
+                            <field name="product_categ_ids" widget="many2many_tags" />
+                            <field name="pricelist_lang" />
+                            <field name="pricelist_id"/>
+                        </group>
+                        <footer>
+                            <button name="action_export" type="object"
+                                    string="Export" class="oe_highlight"/>
+                            <button string="Cancel" class="oe_link"
+                                    special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_pricelist_export_wiz_action"
+                model="ir.actions.act_window">
+            <field name="name">Export Product Pricelist</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.pricelist.export.wiz</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_product_pricelist_export_wiz_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="product_pricelist_export_wiz_action"
+                  id="menu_product_pricelist_export_wiz"
+                  parent="sale.product_menu_catalog" sequence="10"
+                  groups="product_pricelist_export.group_pricelist_export"/>
+
+    </data>
+
+
+</odoo>
