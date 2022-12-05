@@ -74,7 +74,7 @@ class ProductPricelistExportWiz(models.TransientModel):
         fl.seek(0)
         fl_b64 = b64encode(fl.read())
         # download
-        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         attachment_id = self.env['ir.attachment'].create(
             {
                 'name': f'{pricelist_name}.xlsx',
