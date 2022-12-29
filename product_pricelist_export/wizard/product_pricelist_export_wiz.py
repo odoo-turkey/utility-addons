@@ -11,17 +11,21 @@ import itertools
 
 
 class ProductPricelistExportWiz(models.TransientModel):
-    _name = 'product.pricelist.export.wiz'
-    _description = 'Product Pricelist Export Wizard'
+    _name = "product.pricelist.export.wiz"
+    _description = "Product Pricelist Export Wizard"
 
-    product_categ_ids = fields.Many2many(comodel_name='product.category',
-                                         string='Product Categories')
-    pricelist_lang = fields.Many2one('res.lang',
-                                     string='Pricelist Language',
-                                     domain=[('active', '=', True)],
-                                     required=True)
-    pricelist_id = fields.Many2one('product.pricelist',
-                                   string='Pricelist', required=True)
+    product_categ_ids = fields.Many2many(
+        comodel_name="product.category", string="Product Categories"
+    )
+    pricelist_lang = fields.Many2one(
+        "res.lang",
+        string="Pricelist Language",
+        domain=[("active", "=", True)],
+        required=True,
+    )
+    pricelist_id = fields.Many2one(
+        "product.pricelist", string="Pricelist", required=True
+    )
 
     def action_export(self):
         self.ensure_one()
@@ -36,15 +40,18 @@ class ProductPricelistExportWiz(models.TransientModel):
         self._write_header_scales(workbook, worksheet, categ_dict)
         product_count = 0
         for categ, scales in categ_dict.items():
-            categ_name = categ.name
-
+            if self.pricelist_lang.code == "tr_TR":
+                categ_name = categ.name
+            else:
+                categ_name = categ.name_en
             products = self._get_products(categ.id)
             if not products:
                 continue
 
             for product in tqdm(products):
                 base_price_dict = self.pricelist_id._compute_price_rule(
-                    [(product, 1, False)])
+                    [(product, 1, False)]
+                )
                 if not base_price_dict:
                     continue
                 base_price = base_price_dict[product.id][0]
@@ -61,7 +68,8 @@ class ProductPricelistExportWiz(models.TransientModel):
                 for scale in scales:
                     int_scale = int(scale)
                     price_dict = self.pricelist_id._compute_price_rule(
-                        [(product, int_scale, False)])
+                        [(product, int_scale, False)]
+                    )
                     final_price = price_dict[product.id][0]
                     discount = 100 - round(final_price / base_price * 100, 4)
 
@@ -74,12 +82,12 @@ class ProductPricelistExportWiz(models.TransientModel):
         fl.seek(0)
         fl_b64 = b64encode(fl.read())
         # download
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-        attachment_id = self.env['ir.attachment'].create(
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        attachment_id = self.env["ir.attachment"].create(
             {
-                'name': f'{pricelist_name}.xlsx',
-                'datas_fname': f'{pricelist_name} - {str(fields.date.today())}.xlsx',
-                'datas': fl_b64
+                "name": f"{pricelist_name}.xlsx",
+                "datas_fname": f"{pricelist_name} - {str(fields.date.today())}.xlsx",
+                "datas": fl_b64,
             }
         )
         download_url = "/web/content/%s?download=true" % attachment_id.id
@@ -95,34 +103,34 @@ class ProductPricelistExportWiz(models.TransientModel):
         Fields:
         Product Code, Product Name, Price, Price Currency, Product Category
         """
-        bold = workbook.add_format({'bold': True})
-        worksheet.set_column('A:A', 7)
-        worksheet.write('A1', _('No#'), bold)
-        worksheet.set_column('B:B', 75)
-        worksheet.write('B1', _('Name'), bold)
-        worksheet.set_column('C:C', 10)
-        worksheet.write('C1', _('Standard Price'), bold)
-        worksheet.set_column('D:D', 5)
-        worksheet.write('D1', _('Currency'), bold)
-        worksheet.set_column('E:E', 20)
-        worksheet.write('E1', _('Category Name'), bold)
+        bold = workbook.add_format({"bold": True})
+        worksheet.set_column("A:A", 7)
+        worksheet.write("A1", _("No#"), bold)
+        worksheet.set_column("B:B", 75)
+        worksheet.write("B1", _("Name"), bold)
+        worksheet.set_column("C:C", 10)
+        worksheet.write("C1", _("Standard Price"), bold)
+        worksheet.set_column("D:D", 5)
+        worksheet.write("D1", _("Currency"), bold)
+        worksheet.set_column("E:E", 20)
+        worksheet.write("E1", _("Category Name"), bold)
         return True
 
     def _write_header_scales(self, workbook, worksheet, categ_dict):
         """
         Writes categ_dict to the worksheet
         """
-        bold = workbook.add_format({'bold': True})
+        bold = workbook.add_format({"bold": True})
         scale_dict = {}
         scales = [int(x) for x in set(itertools.chain(*categ_dict.values()))]
         col = 5  # start from column F
         for scale in sorted(scales):
             worksheet.set_column(col, col, 7)
-            worksheet.write(0, col, _('Quantity'), bold)
+            worksheet.write(0, col, _("Quantity"), bold)
             worksheet.set_column(col + 1, col + 1, 10)
-            worksheet.write(0, col + 1, _('Discount %'), bold)
+            worksheet.write(0, col + 1, _("Discount %"), bold)
             worksheet.set_column(col + 2, col + 2, 10)
-            worksheet.write(0, col + 2, _('Unit Price'), bold)
+            worksheet.write(0, col + 2, _("Unit Price"), bold)
             scale_dict[scale] = col
             col += 3
         return True
@@ -132,23 +140,22 @@ class ProductPricelistExportWiz(models.TransientModel):
         Returns categories dictionary
         """
         domain = [
-            ('show_in_pricelist', '=', True),
-            ('pricelist_discount_scales', '!=', False)
+            ("show_in_pricelist", "=", True),
+            ("pricelist_discount_scales", "!=", False),
         ]
         if self.product_categ_ids:
-            domain += [('id', 'in', self.product_categ_ids.ids)]
+            domain += [("id", "in", self.product_categ_ids.ids)]
 
-        categs = self.env['product.category'].search(domain)
+        categs = self.env["product.category"].search(domain)
         if not categs:
-            raise ValidationError(_('No category found.'))
+            raise ValidationError(_("No category found."))
 
         categ_dict = {}
         for categ in categs:
-            categ_dict[categ] = categ.pricelist_discount_scales.split(',')
+            categ_dict[categ] = categ.pricelist_discount_scales.split(",")
 
         # sort categs by scale count
-        return dict(sorted(categ_dict.items(), key=lambda x: len(x[1]),
-                           reverse=True))
+        return dict(sorted(categ_dict.items(), key=lambda x: len(x[1]), reverse=True))
 
     def _get_products(self, categ_id):
         """
@@ -156,10 +163,12 @@ class ProductPricelistExportWiz(models.TransientModel):
         selected, returns all products.
         """
         domain = [
-            ('sale_ok', '=', True),
-            ('v_fiyat_dolar', '!=', 0.0),  # Todo: maybe delete this
-            ('categ_id', '=', categ_id)
+            ("type", "=", "product"),
+            ("v_cari_urun", "=", False),
+            ("sale_ok", "=", True),
+            ("v_fiyat_dolar", "!=", 0.0),  # Todo: maybe delete this
+            ("categ_id", "=", categ_id),
         ]
 
-        products = self.env['product.product'].search(domain)
+        products = self.env["product.product"].search(domain)
         return products
