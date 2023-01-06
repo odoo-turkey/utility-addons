@@ -109,7 +109,7 @@ class ProductPricelistExportWiz(models.TransientModel):
         worksheet.set_column("B:B", 75)
         worksheet.write("B1", _("Name"), bold)
         worksheet.set_column("C:C", 10)
-        worksheet.write("C1", _("Standard Price"), bold)
+        worksheet.write("C1", _("Price"), bold)
         worksheet.set_column("D:D", 5)
         worksheet.write("D1", _("Currency"), bold)
         worksheet.set_column("E:E", 20)
@@ -165,6 +165,7 @@ class ProductPricelistExportWiz(models.TransientModel):
         domain = [
             ("type", "=", "product"),
             ("v_cari_urun", "=", False),
+            ("is_published", "=", True),  # only website published products
             ("sale_ok", "=", True),
             ("v_fiyat_dolar", "!=", 0.0),  # Todo: maybe delete this
             ("categ_id", "=", categ_id),
