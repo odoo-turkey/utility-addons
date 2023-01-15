@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+res_competitor,res.competitor,model_res_competitor,,1,1,1,1
+res_competitor_webpage,res.competitor.webpage,model_res_competitor_webpage,,1,1,1,1
