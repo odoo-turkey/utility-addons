@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 from odoo import models, fields, api, _
 from usp.tree import sitemap_tree_for_homepage
+from usp.web_client.requests_client import RequestsWebClient
 
 
 class ResCompetitor(models.Model):
@@ -18,6 +19,7 @@ class ResCompetitor(models.Model):
             rec.crawled_url_count = len(rec.crawled_urls)
 
     name = fields.Char(string="Name")
+    use_proxy = fields.Boolean(string="Use Proxy", default=False)
     website_url = fields.Char(
         string="Website URL",
         required=True,
@@ -41,6 +43,10 @@ class ResCompetitor(models.Model):
         string="Last Crawled",
         readonly=True,
     )
+    crawler_proxy_id = fields.Many2one(
+        string="Proxy",
+        comodel_name="res.competitor.proxy",
+    )
 
     @api.multi
     def unlink(self):
@@ -53,15 +59,15 @@ class ResCompetitor(models.Model):
         return super(ResCompetitor, self).unlink()
 
     @api.model
-    def _action_crawl_competitors(self, domain=None):
+    def run_crawl_competitors(self, domain=None):
         """
-        Multi action for crawl the website and save the urls to the database
+        Multi ASYNC action for crawl the website and save the urls to the database
         :return: None
         """
         domain = domain or [("crawling_active", "=", True)]
         competitors = self.search(domain)
         for rec in competitors:
-            rec.do_crawling()
+            rec.with_delay().do_crawling()
 
     def do_crawling(self):
         """
@@ -71,8 +77,16 @@ class ResCompetitor(models.Model):
         self.ensure_one()
         date_now = fields.Date.today()
         WebPageModel = self.env["res.competitor.webpage"]
+        web_client = RequestsWebClient()
+        if self.use_proxy:
+            web_client.set_proxies(
+                {
+                    "http": self.crawler_proxy_id.proxy_url,
+                    "https": self.crawler_proxy_id.proxy_url,
+                }
+            )
         create_list = []
-        tree = sitemap_tree_for_homepage(self.website_url)
+        tree = sitemap_tree_for_homepage(self.website_url, web_client=web_client)
         cleaned_pages = self._clean_duplicate_urls(tree.all_pages())
         for page in cleaned_pages:
             vals = {

@@ -33,3 +33,14 @@ class ResCompetitorWebPage(models.Model):
         string="Last Seen",
         readonly=True,
     )
+
+    def name_get(self):
+        """
+        Override name_get method to show name as URL
+        :return: name_get
+        """
+        res = []
+        for rec in self:
+            name = rec.name
+            res.append((rec.id, "%s%s" % (name[:50], "..." if len(name) > 50 else "")))
+        return res

@@ -5,7 +5,6 @@ from odoo.tools import float_is_zero
 from odoo.exceptions import ValidationError
 from io import BytesIO
 from base64 import b64encode
-from tqdm import tqdm
 import xlsxwriter
 import itertools
 
