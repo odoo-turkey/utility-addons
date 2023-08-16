@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 17:13+0000\n"
-"PO-Revision-Date: 2023-01-15 17:13+0000\n"
+"POT-Creation-Date: 2023-08-16 16:35+0000\n"
+"PO-Revision-Date: 2023-08-16 16:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:competitor_analysis.view_res_competitor_form
 msgid "<span class=\"o_stat_text\">Crawled URL(s)</span>"
 msgstr "<span class=\"o_stat_text\">Taranan URL(ler)</span>"
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__active
+msgid "Active"
+msgstr "Etkin"
 
 #. module: competitor_analysis
 #: model_terms:ir.actions.act_window,help:competitor_analysis.action_res_competitor
@@ -38,9 +43,21 @@ msgid "Competitor Analysis"
 msgstr "Rakip Analizi"
 
 #. module: competitor_analysis
+#: model:ir.model,name:competitor_analysis.model_res_competitor_proxy
+#: model_terms:ir.ui.view,arch_db:competitor_analysis.view_res_competitor_proxy_form
+msgid "Competitor Analysis Proxy"
+msgstr "Rakip Analizi Proxy"
+
+#. module: competitor_analysis
 #: model:ir.model,name:competitor_analysis.model_res_competitor_webpage
 msgid "Competitor Analysis Webpages"
 msgstr "Rakip Analizi Web Sayfaları"
+
+#. module: competitor_analysis
+#: model:ir.actions.act_window,name:competitor_analysis.action_res_competitor_proxy
+#: model:ir.ui.menu,name:competitor_analysis.competitor_proxy_menu
+msgid "Competitor Proxy"
+msgstr "Rakip Analizi Proxy"
 
 #. module: competitor_analysis
 #: model:ir.actions.act_window,name:competitor_analysis.action_res_competitor_webpage
@@ -50,6 +67,7 @@ msgstr "Rakip Web Sayfaları"
 
 #. module: competitor_analysis
 #: model:ir.actions.act_window,name:competitor_analysis.action_res_competitor
+#: model:ir.ui.menu,name:competitor_analysis.competitor_menu
 #: model:ir.ui.menu,name:competitor_analysis.menu_res_competitor_root
 msgid "Competitors"
 msgstr "Rakipler"
@@ -58,6 +76,13 @@ msgstr "Rakipler"
 #: model_terms:ir.ui.view,arch_db:competitor_analysis.view_res_competitor_form
 msgid "Crawl Competitor"
 msgstr "Rakip Tara"
+
+#. module: competitor_analysis
+#: model:ir.actions.server,name:competitor_analysis.ir_cron_crawl_competitors_webpage_ir_actions_server
+#: model:ir.cron,cron_name:competitor_analysis.ir_cron_crawl_competitors_webpage
+#: model:ir.cron,name:competitor_analysis.ir_cron_crawl_competitors_webpage
+msgid "Crawl competitors webpage"
+msgstr "Rakip web sayfalarını tara"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__crawled_url_count
@@ -81,18 +106,21 @@ msgstr "Tarama Aktif"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__create_uid
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__create_uid
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_webpage__create_uid
 msgid "Created by"
 msgstr "Oluşturan"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__create_date
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__create_date
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_webpage__create_date
 msgid "Created on"
 msgstr "Oluşturulma"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__display_name
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__display_name
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_webpage__display_name
 msgid "Display Name"
 msgstr "Görünüm Adı"
@@ -108,10 +136,26 @@ msgid "First Seen"
 msgstr "İlk Görülen"
 
 #. module: competitor_analysis
+#: selection:res.competitor.proxy,proxy_type:0
+msgid "HTTP"
+msgstr ""
+
+#. module: competitor_analysis
+#: selection:res.competitor.proxy,proxy_type:0
+msgid "HTTPS"
+msgstr ""
+
+#. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__id
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__id
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_webpage__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__ip_address
+msgid "IP Address"
+msgstr "IP Adresi"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__last_crawled
@@ -120,6 +164,7 @@ msgstr "Son Taranan"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor____last_update
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy____last_update
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_webpage____last_update
 msgid "Last Modified on"
 msgstr "Son Güncelleme"
@@ -131,21 +176,59 @@ msgstr "Son Görülen"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__write_uid
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__write_uid
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_webpage__write_uid
 msgid "Last Updated by"
 msgstr "Son Güncelleyen"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__write_date
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__write_date
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_webpage__write_date
 msgid "Last Updated on"
 msgstr "Son Güncelleme"
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__name
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__name
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_webpage__name
 msgid "Name"
-msgstr "Adı"
+msgstr "İsim"
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__password
+msgid "Password"
+msgstr "Parola "
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__port
+msgid "Port"
+msgstr ""
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__crawler_proxy_id
+msgid "Proxy"
+msgstr ""
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__proxy_type
+msgid "Proxy Type"
+msgstr "Proxy Tipi"
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__proxy_url
+msgid "Proxy URL"
+msgstr "Proxy URL"
+
+#. module: competitor_analysis
+#: selection:res.competitor.proxy,proxy_type:0
+msgid "SOCKS4"
+msgstr ""
+
+#. module: competitor_analysis
+#: selection:res.competitor.proxy,proxy_type:0
+msgid "SOCKS5"
+msgstr ""
 
 #. module: competitor_analysis
 #: code:addons/competitor_analysis/models/res_competitor_webpage.py:14
@@ -153,6 +236,16 @@ msgstr "Adı"
 #, python-format
 msgid "The URL must be unique for each competitor. "
 msgstr "URL'ler her rakip için benzersiz olmalıdır. "
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__use_proxy
+msgid "Use Proxy"
+msgstr "Proxy Kullan"
+
+#. module: competitor_analysis
+#: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor_proxy__username
+msgid "Username"
+msgstr "Kullanıcı adı "
 
 #. module: competitor_analysis
 #: model:ir.model.fields,field_description:competitor_analysis.field_res_competitor__website_url
