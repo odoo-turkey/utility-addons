@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Competitor Analysis Webpage -->
+    <record id="view_res_competitor_webpage_tree" model="ir.ui.view">
+        <field name="name">view.res.competitor.proxy.tree</field>
+        <field name="model">res.competitor.proxy</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="active"/>
+                <field name="name"/>
+                <field name="proxy_url"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_res_competitor_proxy_form" model="ir.ui.view">
+        <field name="name">view.res.competitor.proxy.form</field>
+        <field name="model">res.competitor.proxy</field>
+        <field name="arch" type="xml">
+            <form string="Competitor Analysis Proxy">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                name="toggle_active"
+                                icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "active"}'/>
+                        </button>
+                    </div>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="proxy_type"/>
+                        <field name="username"/>
+                        <field name="password"/>
+                        <field name="ip_address"/>
+                        <field name="port"/>
+                        <field name="proxy_url" widget="url"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_res_competitor_proxy"
+            model="ir.actions.act_window">
+        <field name="name">Competitor Proxy</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.competitor.proxy</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+</odoo>

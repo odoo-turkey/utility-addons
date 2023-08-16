@@ -6,7 +6,10 @@ Bu modül ne işe yarar?
 
 ### Bağımlılıklar:
 
-ultimate-sitemap-parser==0.5
+ultimate-sitemap-parser==0.5 (yibudak/ultimate-sitemap-parser gerekli)
+yüklemek için 
+
+pip install "git+https://github.com/yibudak/ultimate-sitemap-parser.git@develop#egg=ultimate-sitemap-parser"
 
 ### Notlar:
 

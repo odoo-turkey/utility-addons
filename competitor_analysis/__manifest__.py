@@ -11,11 +11,15 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["base"],
+    "depends": ["base", "queue_job"],
     "external_dependencies": {"python": ["usp.tree"]},
     "data": [
-        # "data/ir_cron.xml",
+        "data/ir_cron.xml",
         "views/res_competitor_views.xml",
+        "views/res_competitor_proxy_views.xml",
+        "views/res_competitor_webpage_views.xml",
+        "views/menus.xml",
+        "views/assets.xml",
         "security/ir.model.access.csv",
     ],
 }
