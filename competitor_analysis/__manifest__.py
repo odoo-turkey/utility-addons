@@ -14,12 +14,13 @@
     "depends": ["base", "queue_job"],
     "external_dependencies": {"python": ["usp.tree"]},
     "data": [
+        "security/competitor_security.xml",
+        "security/ir.model.access.csv",
         "data/ir_cron.xml",
         "views/res_competitor_views.xml",
         "views/res_competitor_proxy_views.xml",
         "views/res_competitor_webpage_views.xml",
         "views/menus.xml",
         "views/assets.xml",
-        "security/ir.model.access.csv",
     ],
 }

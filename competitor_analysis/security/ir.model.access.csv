@@ -1,4 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-res_competitor,res.competitor,model_res_competitor,,1,1,1,1
-res_competitor_webpage,res.competitor.webpage,model_res_competitor_webpage,,1,1,1,1
-res_competitor_proxy,res.competitor.proxy,model_res_competitor_proxy,,1,1,1,1
+res_competitor,res.competitor,model_res_competitor,,0,0,0,0
+res_competitor_webpage,res.competitor.webpage,model_res_competitor_webpage,,0,0,0,0
+res_competitor_proxy,res.competitor.proxy,model_res_competitor_proxy,,0,0,0,0
+res_competitor,res.competitor,model_res_competitor,competitor_analysis.group_competitor_analysis_manager,1,1,1,1
+res_competitor_webpage,res.competitor.webpage,model_res_competitor_webpage,competitor_analysis.group_competitor_analysis_manager,1,1,1,1
+res_competitor_proxy,res.competitor.proxy,model_res_competitor_proxy,competitor_analysis.group_competitor_analysis_manager,1,1,1,1
