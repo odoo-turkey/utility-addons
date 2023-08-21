@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="ir_logging_form_view_inherit" model="ir.ui.view">
+        <field name="name">ir.logging.form.inherit</field>
+        <field name="model">ir.logging</field>
+        <field name="inherit_id" ref="base.ir_logging_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_add_to_tasks"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-tasks"
+                            string="Add To Tasks">
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
