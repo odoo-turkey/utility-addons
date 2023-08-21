@@ -1,0 +1,133 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* logging_project_link
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-21 08:09+0000\n"
+"PO-Revision-Date: 2023-08-21 08:09+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: logging_project_link
+#: model_terms:ir.ui.view,arch_db:logging_project_link.ir_logging_form_view_inherit
+msgid "Add To Tasks"
+msgstr "Görevlere Ekle"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__assigned_to
+msgid "Assigned to"
+msgstr "Atanan"
+
+#. module: logging_project_link
+#: model_terms:ir.ui.view,arch_db:logging_project_link.logging_linker_view
+msgid "Cancel"
+msgstr "İptal"
+
+#. module: logging_project_link
+#: model_terms:ir.ui.view,arch_db:logging_project_link.logging_linker_view
+msgid "Create Task"
+msgstr "Görev Oluştur"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__create_uid
+msgid "Created by"
+msgstr "Oluşturan"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__create_date
+msgid "Created on"
+msgstr "Oluşturulma"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__display_name
+msgid "Display Name"
+msgstr "Görünüm Adı"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__id
+msgid "ID"
+msgstr ""
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker____last_update
+msgid "Last Modified on"
+msgstr "Son Güncelleme"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__write_uid
+msgid "Last Updated by"
+msgstr "Son Güncelleyen"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__write_date
+msgid "Last Updated on"
+msgstr "Son Güncelleme"
+
+#. module: logging_project_link
+#: model:ir.model,name:logging_project_link.model_logging_linker
+msgid "Links a logging record to project easily with the help of a button"
+msgstr ""
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__log_id
+msgid "Log"
+msgstr "günlük"
+
+#. module: logging_project_link
+#: model:ir.model,name:logging_project_link.model_ir_logging
+msgid "Logging"
+msgstr "Loglama"
+
+#. module: logging_project_link
+#: model:ir.actions.act_window,name:logging_project_link.logging_link_wizard
+msgid "Logging Linker Window"
+msgstr ""
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_project_task__log_id
+msgid "Related Log"
+msgstr "İlgili Log"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_project_task_type__default_log_save
+msgid "Save logs"
+msgstr "Loglar'ı Kaydet"
+
+#. module: logging_project_link
+#: model:ir.model,name:logging_project_link.model_project_task
+msgid "Task"
+msgstr "Görev"
+
+#. module: logging_project_link
+#: model:ir.model,name:logging_project_link.model_project_task_type
+msgid "Task Stage"
+msgstr "Görev Aşaması"
+
+#. module: logging_project_link
+#: model:ir.model.fields,field_description:logging_project_link.field_logging_linker__task_title
+msgid "Task Title"
+msgstr "Görev Başlığı"
+
+#. module: logging_project_link
+#: code:addons/logging_project_link/models/project_task_type.py:18
+#, python-format
+msgid "There is already a default task type that we save logs."
+msgstr "Zaten Log'ları kaydettiğimiz bir görev türü var."
+
+#. module: logging_project_link
+#: code:addons/logging_project_link/wizard/logging_link_to_tasks.py:31
+#, python-format
+msgid "You need to set a stage for this action."
+msgstr "Log'u kaydetmeden önce bir görev türü belirlemelisin."
+
+#. module: logging_project_link
+#: model_terms:ir.ui.view,arch_db:logging_project_link.logging_linker_view
+msgid "or"
+msgstr "ya da"

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="logging_linker_view" model="ir.ui.view">
+        <field name="name">Logging Linker Form</field>
+        <field name="model">logging.linker</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="log_id" readonly="True" invisible="1"/>
+                        <field name="task_title"/>
+                        <field name="assigned_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="create_task"
+                            string="Create Task"
+                            type="object"
+                            class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window
+            id="logging_link_wizard"
+            res_model="logging.linker"
+            src_model="ir.logging"
+            multi="True"
+            target="new"
+            name="Logging Linker Window"
+            view_id="logging_linker_view"
+    />
+</odoo>
