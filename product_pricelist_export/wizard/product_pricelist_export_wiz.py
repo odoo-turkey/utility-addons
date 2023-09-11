@@ -47,7 +47,7 @@ class ProductPricelistExportWiz(models.TransientModel):
             if not products:
                 continue
 
-            for product in tqdm(products):
+            for product in products:
                 base_price_dict = self.pricelist_id._compute_price_rule(
                     [(product, 1, self.env["res.partner"])]
                 )
