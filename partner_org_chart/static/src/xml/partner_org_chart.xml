@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="partner_org_chart_partner">
+    <div t-attf-class="o_org_chart_entry media">
+        <t t-set="is_self" t-value="data['is_self']"/>
+
+        <div class="o_media_left">
+            <!-- NOTE: Since by the default on not squared images odoo add white borders,
+                use bg-images to get a clean and centred images -->
+            <a t-if="! is_self"
+                class="o_media_object rounded-circle o_partner_redirect"
+                t-att-style="'background-image:url(\'/web/image/res.partner/' + data['id'] + '/image/\')'"
+                t-att-alt="data['name']"
+                t-att-data-partner-id="data['id']"
+                t-att-href="data['link']"/>
+            <div t-if="is_self"
+                class="o_media_object rounded-circle"
+                t-att-style="'background-image:url(\'/web/image/res.partner/' + data['id'] + '/image/\')'"/>
+        </div>
+        <div class="media-body">
+            <t t-if="!is_self">
+                <a t-att-href="data['link']" class="o_partner_redirect" t-att-data-partner-id="data['id']">
+                    <h5 class="o_media_heading"><b><t t-esc="data['name']"/></b></h5>
+                    <strong><t t-esc="data['partner_type']"/></strong>
+                </a>
+            </t>
+            <t t-if="is_self">
+                <h5 class="o_media_heading"><b><t t-esc="data['name']"/></b></h5>
+                <strong><t t-esc="data['partner_type']"/></strong>
+            </t>
+        </div>
+    </div>
+
+    <!-- Render childs -->
+    <div t-if="child_ids.length" class="o_org_chart_group_down">
+        <t t-foreach="child_ids" t-as="partner">
+                <t t-call="partner_org_chart_partner" />
+        </t>
+    </div>
+</t>
+
+<t t-name="partner_org_chart">
+    <div class="o_org_chart_group_up">
+        <t t-call="partner_org_chart_partner"/>
+    </div>
+</t>
+
+
+</templates>
