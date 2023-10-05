@@ -42,7 +42,7 @@
 
 <t t-name="partner_org_chart">
     <div class="o_org_chart_group_up">
-        <t t-call="partner_org_chart_partner"/>
+        <t t-if="data" t-call="partner_org_chart_partner"/>
     </div>
 </t>
 
