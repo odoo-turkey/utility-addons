@@ -39,10 +39,9 @@ class ProductPricelistExportWiz(models.TransientModel):
         self._write_header_scales(workbook, worksheet, categ_dict)
         product_count = 0
         for categ, scales in categ_dict.items():
-            if self.pricelist_lang.code == "tr_TR":
-                categ_name = categ.name
-            else:
-                categ_name = categ.name_en
+            categ_name = categ.name_translatable.with_context(
+                lang=self.pricelist_lang.code
+            )
             products = self._get_products(categ.id)
             if not products:
                 continue
