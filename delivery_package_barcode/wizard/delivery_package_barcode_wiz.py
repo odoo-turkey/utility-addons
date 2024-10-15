@@ -43,7 +43,6 @@ class DeliveryPackageBarcodeWiz(models.TransientModel):
             res.name = res.picking_id.name + _(" - PACK BARCODE")
         return res
 
-    @api.one
     def button_save(self):
         vals = {
             "carrier_package_count": self.package_count,
